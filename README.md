@@ -22,7 +22,7 @@ Supports both **vanilla Minecraft borders** and **[ChunkyBorder](https://github.
 mvn package
 ```
 
-The compiled jar will be in `target/BorderEffects-1.0.0.jar`.
+The compiled jar will be in `target/BorderEffects-0.1.0.jar`.
 
 > **Note:** The build requires network access to [repo.papermc.io](https://repo.papermc.io/repository/maven-public/) and [repo.codemc.io](https://repo.codemc.io/repository/maven-public/).
 
@@ -30,7 +30,7 @@ The compiled jar will be in `target/BorderEffects-1.0.0.jar`.
 
 ## Installation
 
-1. Copy `BorderEffects-1.0.0.jar` into your server's `plugins/` folder.
+1. Copy `BorderEffects-0.1.0.jar` into your server's `plugins/` folder.
 2. If you use ChunkyBorder, ensure its jar is also in `plugins/` — the plugin auto-detects it.
 3. Start / restart the server.
 
