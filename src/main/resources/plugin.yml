@@ -1,0 +1,21 @@
+name: BorderEffects
+version: '${project.version}'
+main: me.ashlynorsomethin.bordereffects.BorderEffectsPlugin
+api-version: '1.21'
+description: Applies potion effects to players near the world border
+author: AshlynOrSomethin
+
+softdepend:
+  - ChunkyBorder
+
+commands:
+  bordereffects:
+    description: BorderEffects plugin commands
+    usage: /bordereffects <reload>
+    aliases:
+      - be
+
+permissions:
+  bordereffects.admin:
+    description: Allows use of /bordereffects admin commands
+    default: op

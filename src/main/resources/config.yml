@@ -1,0 +1,31 @@
+# BorderEffects Configuration
+
+# How often to check player positions (in ticks; 20 ticks = 1 second).
+check-interval: 10
+
+# Distance from the border edge (in blocks) at which effects begin to apply.
+# For vanilla rectangular borders this is a Chebyshev distance.
+# For ChunkyBorder shapes a radial proximity check is used.
+warning-distance: 20.0
+
+# How long between border warning messages sent to nearby players (in seconds).
+message-interval: 60
+
+# Messages randomly sent to players within the warning distance.
+messages:
+  - "§7A mysterious fog creeps in around you..."
+  - "§7You shouldn't wander this far..."
+  - "§7What lies beyond is unknown..."
+
+# Potion effects applied while a player is within the warning distance.
+# type     - PotionEffectType name (see https://jd.papermc.io/paper/1.21/ for full list)
+# amplifier - effect level (0 = level I, 1 = level II, etc.)
+# duration  - length in ticks; effects are refreshed every check-interval so
+#             set this to at least check-interval + a small buffer.
+effects:
+  - type: BLINDNESS
+    amplifier: 0
+    duration: 60
+  - type: SLOWNESS
+    amplifier: 1
+    duration: 60
