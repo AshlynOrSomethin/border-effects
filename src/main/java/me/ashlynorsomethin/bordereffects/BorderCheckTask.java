@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class BorderCheckTask implements Runnable {
 
+    private static final int DEFAULT_AMPLIFIER = 0;
+    private static final int DEFAULT_DURATION = 60;
+
     private final BorderEffectsPlugin plugin;
 
     public BorderCheckTask(BorderEffectsPlugin plugin) {
@@ -23,6 +26,7 @@ public class BorderCheckTask implements Runnable {
     @Override
     public void run() {
         double warningDistance = plugin.getConfig().getDouble("warning-distance", 20.0);
+        int checkInterval = plugin.getConfig().getInt("check-interval", 10);
         List<PotionEffect> effects = loadEffects();
 
         if (effects.isEmpty()) return;
@@ -31,7 +35,7 @@ public class BorderCheckTask implements Runnable {
             boolean near = isNearAnyBorder(player, warningDistance);
 
             if (near) {
-                applyEffects(player, effects);
+                applyEffects(player, effects, checkInterval);
             } else {
                 removeEffects(player, effects);
             }
@@ -53,11 +57,11 @@ public class BorderCheckTask implements Runnable {
         return VanillaBorderChecker.isNearBorder(player, warningDistance);
     }
 
-    private void applyEffects(Player player, List<PotionEffect> effects) {
+    private void applyEffects(Player player, List<PotionEffect> effects, int checkInterval) {
         for (PotionEffect effect : effects) {
             PotionEffect current = player.getPotionEffect(effect.getType());
             // Reapply only when effect is absent or running low to avoid packet spam.
-            if (current == null || current.getDuration() < plugin.getConfig().getInt("check-interval", 10) + 5) {
+            if (current == null || current.getDuration() < checkInterval + 5) {
                 player.addPotionEffect(effect);
             }
         }
@@ -83,8 +87,8 @@ public class BorderCheckTask implements Runnable {
                 continue;
             }
             String typeName = section.getString("type", "");
-            int amplifier = section.getInt("amplifier", 0);
-            int duration = section.getInt("duration", 60);
+            int amplifier = section.getInt("amplifier", DEFAULT_AMPLIFIER);
+            int duration = section.getInt("duration", DEFAULT_DURATION);
             addEffect(typeName, amplifier, duration, result);
         }
 
@@ -97,8 +101,8 @@ public class BorderCheckTask implements Runnable {
         Object durObj = map.get("duration");
 
         String typeName = typeObj != null ? typeObj.toString() : "";
-        int amplifier = ampObj instanceof Number n ? n.intValue() : 0;
-        int duration = durObj instanceof Number n ? n.intValue() : 60;
+        int amplifier = ampObj instanceof Number n ? n.intValue() : DEFAULT_AMPLIFIER;
+        int duration = durObj instanceof Number n ? n.intValue() : DEFAULT_DURATION;
 
         addEffect(typeName, amplifier, duration, result);
     }
